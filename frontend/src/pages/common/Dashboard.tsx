@@ -15,7 +15,7 @@ export default function DashboardPage() {
   return (
     <DashboardLayout>
       <div className="p-5">
-        <h1 className="text-3xl font-medium text-gray-800 mt-0 mb-1">
+        <h1 className="text-4xl ml-8 font-semibold font-medium text-gray-800 mt-0 mb-1">
           Dashboard
         </h1>
         <ProfileForm />

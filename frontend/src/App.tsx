@@ -1,23 +1,24 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
-import Home from "./pages/common/Home";
+import AddAccount from "./pages/admin/AddAccount.tsx";
+import Admin from "./pages/admin/Admin.tsx";
 import { Auth } from "./pages/common/Auth";
-import OpdLog from "./pages/paramedics/opdLog.tsx";
+import Dashboard from "./pages/common/Dashboard.tsx";
+import DoctorAvailability from "./pages/doctor/DoctorAvailability.tsx";
+import DoctorCalendar from "./pages/doctor/DoctorCalender.tsx";
 import Prescribe from "./pages/doctor/Prescribe";
 import { AddMedicine } from "./pages/paramedics/AddMedicine.tsx";
-import Admin from "./pages/admin/Admin.tsx";
-import AddAccount from "./pages/admin/AddAccount.tsx";
-import Opd from "./pages/receptionist/Opd.tsx";
-import Dashboard from "./pages/common/Dashboard.tsx";
-import Inventory from "./pages/paramedics/Inventory.tsx";
 import DispatchMedicine from "./pages/paramedics/DispatchMedicine.tsx";
+import Inventory from "./pages/paramedics/Inventory.tsx";
 import MedicineInfo from "./pages/paramedics/MedicineInfo.tsx";
+import OpdLog from "./pages/paramedics/opdLog.tsx";
+import Opd from "./pages/receptionist/Opd.tsx";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <Auth />,
     },
     {
       path: "/auth",
@@ -49,6 +50,14 @@ const App = () => {
             { path: "dashboard", element: <Dashboard /> },
             { path: "patientqueue", element: <OpdLog status="false" /> },
             { path: "prescribe", element: <Prescribe /> },
+            {
+              path: "availability",
+              element: <DoctorAvailability />,
+            },
+            {
+              path: "schedule/view",
+              element: <DoctorCalendar />,
+            },
           ],
         },
         {

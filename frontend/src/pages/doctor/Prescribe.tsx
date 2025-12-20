@@ -1,16 +1,11 @@
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import Button from "@/components/Button";
-import Access from "../common/access";
-import { useContext, ChangeEvent } from "react";
-import { toast, ToastContainer } from "react-toastify";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -19,12 +14,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ChevronDown } from "lucide-react";
-import { prescriptionContext } from "@/store/prescriptionContext";
+import { Textarea } from "@/components/ui/textarea";
 import { dataPass } from "@/lib/types.ts";
 import { api } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
+import { prescriptionContext } from "@/store/prescriptionContext";
 import { userContext } from "@/store/userContext";
+import { ChevronDown } from "lucide-react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import Access from "../common/access";
 
 const vitals: Array<{
   id: string;
@@ -76,7 +75,7 @@ const prescriptionFields = [
     placeholder: "Enter investigations",
   },
   {
-    id: "diagnosis-icd",
+    id: "diagnosis",
     label: "Diagnosis (ICD Code & Description)",
     placeholder: "Enter ICD diagnosis",
   },
@@ -124,13 +123,38 @@ interface InputValue {
 }
 
 export default function Prescribe() {
+  const [showAdvice, setShowAdvice] = useState(false);
+
   const navigate = useNavigate();
   const [isVitalsOpen, setIsVitalsOpen] = useState(false);
   const [isPrescriptionOpen, setIsPrescriptionOpen] = useState(false);
   const [isPharmacyMedicationOpen, setIsPharmacyMedicationOpen] =
     useState(false);
 
-  const { prescription } = useContext(prescriptionContext);
+  const { prescription, setPrescription } = useContext(prescriptionContext);
+  useEffect(() => {
+    if (!prescription || !prescription._id) {
+      setShowAdvice(true);
+    }
+  }, [prescription]);
+  useEffect(() => {
+    if (!prescription || !prescription._id) return;
+
+    setInputValue((prev) => ({
+      ...prev,
+      vitals: {
+        bp: prescription.bp || "",
+        spo2: prescription.spo2 || "",
+        temperature: prescription.temperature || "",
+        heart_rate: prescription.heart_rate || "",
+        pregnant: prescription.pregnant || false,
+        bmi: prescription.bmi || "",
+        glucose: prescription.glucose || "",
+        respiratory_rate: prescription.respiratory_rate || "",
+      },
+    }));
+  }, [prescription]);
+
   const { user } = useContext(userContext);
   const [inputValue, setInputValue] = useState<InputValue>({
     paramedic_notes: "",
@@ -187,12 +211,40 @@ export default function Prescribe() {
         rest_recommendation: inputValue.rest_recommendation,
         follow_up_date: inputValue.follow_up_date,
       });
-      console.log("API Response: ", response);
-      toast.success(response.data.message);
-
-      navigate("/app/doctor/patientqueue", {
-        state: { prescription_id: prescription._id },
+      // console.log("API Response: ", response);
+      // toast.success(response.data.message);
+      setPrescription({
+        _id: "",
+        name: "",
+        email: "",
+        gender: "",
+        mobile_no: "",
+        age: "",
+        dob: new Date(),
+        addr: "",
+        staffId: "",
+        roll_no: "",
+        hostel: "",
+        year: "",
+        room_no: "",
+        department: "",
+        spo2: "",
+        bp: "",
+        heart_rate: "",
+        bmi: "",
+        glucose: "",
+        respiratory_rate: "",
+        pregnant: false,
+        prescription: [],
       });
+
+      toast.success("Prescription saved successfully");
+
+      setTimeout(() => {
+        navigate("/app/doctor/patientqueue", {
+          state: { prescription_id: prescription._id },
+        });
+      }, 1200);
     } catch (error) {
       toast.error("Error while saving prescription details.");
       console.error(error);
@@ -246,7 +298,13 @@ export default function Prescribe() {
       ...prev,
       medicine: [
         ...prev.medicine,
-        { m_id: "", name: "", frequency: "", duration: "", instructions: "" },
+        {
+          m_id: "",
+          name: "",
+          frequency: "",
+          duration: "",
+          instructions: "",
+        },
       ],
     }));
   };
@@ -300,7 +358,9 @@ export default function Prescribe() {
         </h1>
         <div className="space-y-6 bg-white p-8 rounded-2xl">
           <form
-            className="space-y-6 max-w-7xl mx-auto "
+            className={`space-y-6 max-w-7xl mx-auto ${
+              showAdvice ? "pointer-events-none opacity-40" : ""
+            }`}
             onSubmit={submitPrescriptionForm}
           >
             <div className="space-y-4">
@@ -308,27 +368,27 @@ export default function Prescribe() {
               <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
                 <div className="space-y-1">
                   <Label className="text-gray-500">Name</Label>
-                  <p className="font-medium">{prescription.name}</p>
+                  <p className="font-medium">{prescription.name || "-"}</p>
                 </div>
                 <div className="space-y-1">
                   <Label className="text-gray-500">Roll No/Staff ID</Label>
-                  <p className="font-medium">{prescription.roll_no}</p>
+                  <p className="font-medium">{prescription.roll_no || "-"}</p>
                 </div>
                 <div className="space-y-1">
                   <Label className="text-gray-500">Gender</Label>
-                  <p className="font-medium">{prescription.gender}</p>
+                  <p className="font-medium">{prescription.gender || "-"}</p>
                 </div>
                 <div className="space-y-1">
                   <Label className="text-gray-500">Age</Label>
-                  <p className="font-medium">{prescription.age}</p>
+                  <p className="font-medium">{prescription.age || "-"}</p>
                 </div>
                 <div className="space-y-1 ">
                   <Label className="text-gray-500">Email</Label>
-                  <p className="font-medium">{prescription.email}</p>
+                  <p className="font-medium">{prescription.email || "-"}</p>
                 </div>
                 <div className="space-y-1 ">
                   <Label className="text-gray-500">Mobile Number</Label>
-                  <p className="font-medium">{prescription.mobile_no}</p>
+                  <p className="font-medium">{prescription.mobile_no || "-"}</p>
                 </div>
               </div>
               <div className="space-y-2">
@@ -370,6 +430,24 @@ export default function Prescribe() {
                       />
                     </div>
                   ))}
+                  <div className="flex items-center space-x-2 mt-8 ml-2">
+                    <input
+                      type="checkbox"
+                      id="pregnant"
+                      className="w-4 h-4"
+                      checked={inputValue.vitals.pregnant}
+                      onChange={(e) => {
+                        setInputValue((prev) => ({
+                          ...prev,
+                          vitals: {
+                            ...prev.vitals,
+                            pregnant: e.target.checked,
+                          },
+                        }));
+                      }}
+                    />
+                    <Label htmlFor="pregnant">Patient is Pregnant?</Label>
+                  </div>
                 </div>
               </CollapsibleContent>
             </Collapsible>
@@ -608,6 +686,30 @@ export default function Prescribe() {
           </form>
         </div>
       </div>
+      {showAdvice && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md">
+            <h2 className="text-xl font-semibold text-red-600 mb-3">
+              Action Required
+            </h2>
+
+            <p className="text-gray-700 mb-4">
+              You cannot prescribe directly.
+              <br />
+              Please select a patient from <b>Patient Queue</b>.
+            </p>
+
+            <div className="flex justify-end">
+              <button
+                onClick={() => navigate("/app/doctor/patientqueue")}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md"
+              >
+                Go to Patient Queue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Access>
   );
 }

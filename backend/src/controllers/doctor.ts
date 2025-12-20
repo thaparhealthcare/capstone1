@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import prescription from "../models/prescription.js";
+import doctorAvailability from "../models/doctorAvailability.js";
 import medicine from "../models/medicine.js";
 import patientQueue from "../models/patientQueue.js";
+import prescription from "../models/prescription.js";
 
 export const createPrescription = async (_req: Request, res: Response) => {
   try {
@@ -104,5 +105,107 @@ export const searchMedicine = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error searching medicine:", error);
     res.status(500).json({ success: false, message: "Server error", error });
+  }
+};
+
+export const setDoctorAvailability = async (req: Request, res: Response) => {
+  try {
+    const user = req.body.user;
+
+    if (!user || user.role !== "doctor") {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const doctorId = user._id;
+    const { date, isLeave = false, timeRanges = [] } = req.body;
+
+    // date must be "YYYY-MM-DD"
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid date format (YYYY-MM-DD required)",
+      });
+    }
+
+    if (isLeave && timeRanges.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Leave day cannot have time ranges",
+      });
+    }
+
+    // Validate 24-hour time
+    for (const slot of timeRanges) {
+      if (!slot.startTime || !slot.endTime) {
+        return res.status(400).json({
+          success: false,
+          message: "startTime and endTime are required",
+        });
+      }
+
+      // 24-hour comparison works perfectly
+      if (slot.startTime >= slot.endTime) {
+        return res.status(400).json({
+          success: false,
+          message: "startTime must be less than endTime",
+        });
+      }
+    }
+
+    // 🔥 OVERRIDE LOGIC (PROFESSIONAL)
+    await doctorAvailability.findOneAndUpdate(
+      { doctor: doctorId, date },
+      {
+        doctor: doctorId,
+        date,
+        isLeave,
+        timeRanges: isLeave ? [] : timeRanges,
+      },
+      { upsert: true, new: true }
+    );
+
+    res.status(201).json({
+      success: true,
+      message: "Doctor availability saved successfully",
+    });
+  } catch (error: any) {
+    console.error("Error setting availability:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+export const getDoctorAvailability = async (req: Request, res: Response) => {
+  try {
+    const user = req.body.user;
+
+    if (!user || user.role !== "doctor") {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const doctorId = user._id;
+
+    const availability = await doctorAvailability
+      .find({ doctor: doctorId })
+      .sort({ date: 1 }); // string sort works for YYYY-MM-DD
+
+    res.status(200).json({
+      success: true,
+      availability,
+    });
+  } catch (error: any) {
+    console.error("Error fetching availability:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };

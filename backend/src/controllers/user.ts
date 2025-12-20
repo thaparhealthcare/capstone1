@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import user from "../models/user.js";
-import { createToken } from "../utils/jwt.js";
-import { userInterface } from "../types/user";
 import Queue from "../models/patientQueue.js";
 import Prescription from "../models/prescription.js";
+import user from "../models/user.js";
+import { userInterface } from "../types/user";
+import { createToken } from "../utils/jwt.js";
 
 export const login = async (req: Request, res: Response) => {
   const { name, password } = req.body;

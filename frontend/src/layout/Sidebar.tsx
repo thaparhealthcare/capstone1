@@ -1,11 +1,9 @@
 import {
   ClipboardList,
-  Coffee,
   GraduationCap,
   LayoutDashboard,
   LogOut,
   Stethoscope,
-  Trash2,
 } from "lucide-react";
 import { LuNotebookPen } from "react-icons/lu";
 import { MdOutlineInventory } from "react-icons/md";
@@ -34,21 +32,21 @@ const links = [
         href: "/app/receptionist/opdLog",
         logo: <ClipboardList className="mr-3 h-5 w-5" />,
       },
-      {
-        name: "Medical Waste",
-        href: "/app/receptionist/dashboard",
-        logo: <Trash2 className="mr-3 h-5 w-5" />,
-      },
-      {
-        name: "Rest",
-        href: "/app/receptionist/dashboard",
-        logo: <Coffee className="mr-3 h-5 w-5" />,
-      },
-      {
-        name: "Training",
-        href: "/app/receptionist/dashboard",
-        logo: <GraduationCap className="mr-3 h-5 w-5" />,
-      },
+      // {
+      //   name: "Medical Waste",
+      //   href: "/app/receptionist/dashboard",
+      //   logo: <Trash2 className="mr-3 h-5 w-5" />,
+      // },
+      // {
+      //   name: "Rest",
+      //   href: "/app/receptionist/dashboard",
+      //   logo: <Coffee className="mr-3 h-5 w-5" />,
+      // },
+      // {
+      //   name: "Training",
+      //   href: "/app/receptionist/dashboard",
+      //   logo: <GraduationCap className="mr-3 h-5 w-5" />,
+      // },
     ],
   },
   {
@@ -74,11 +72,11 @@ const links = [
         href: "/app/paramedic/add-medicine",
         logo: <ClipboardList className="mr-3 h-5 w-5" />,
       },
-      {
-        name: "Training",
-        href: "/app/paramedic/dashboard",
-        logo: <GraduationCap className="mr-3 h-5 w-5" />,
-      },
+      // {
+      //   name: "Training",
+      //   href: "/app/paramedic/dashboard",
+      //   logo: <GraduationCap className="mr-3 h-5 w-5" />,
+      // },
     ],
   },
   {
@@ -99,10 +97,20 @@ const links = [
         href: "/app/doctor/prescribe",
         logo: <LuNotebookPen className="mr-3 h-5 w-5" />,
       },
+      // {
+      //   name: "Training",
+      //   href: "/app/doctor/dashboard",
+      //   logo: <GraduationCap className="mr-3 h-5 w-5" />,
+      // },
       {
-        name: "Training",
-        href: "/app/doctor/dashboard",
-        logo: <GraduationCap className="mr-3 h-5 w-5" />,
+        name: "OPD Schedule",
+        href: "/app/doctor/availability",
+        logo: <ClipboardList className="mr-3 h-5 w-5" />,
+      },
+      {
+        name: "View Schedule",
+        href: "/app/doctor/schedule/view",
+        logo: <ClipboardList className="mr-3 h-5 w-5" />,
       },
     ],
   },
@@ -152,7 +160,7 @@ export default function Sidebar() {
             <Link
               to={link.href}
               key={i}
-              className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 rounded-lg group transition-colors duration-200"
+              className="flex items-center px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-lg group transition-colors duration-200"
             >
               {link.logo}
               <p className="group-hover:ml-1.5 transition-all duration-300">
@@ -166,7 +174,7 @@ export default function Sidebar() {
       <div className="absolute bottom-0 w-full p-4">
         <button
           onClick={() => logout()}
-          className="flex w-full items-center px-4 py-3 text-gray-300 group hover:bg-gray-700 rounded-lg"
+          className="flex w-full items-center px-4 py-3 text-gray-100 group hover:bg-gray-700 rounded-lg"
         >
           <LogOut className="mr-3 h-5 w-5" />
           <p className="group-hover:ml-1.5 transition-all duration-300">

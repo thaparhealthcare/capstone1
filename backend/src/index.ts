@@ -1,9 +1,9 @@
-import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import user from "./routes/user.js";
+import express from "express";
 import doctorRoutes from "./routes/doctor.js";
 import paramedicRoutes from "./routes/paramedics.js";
+import user from "./routes/user.js";
 
 import dotenv from "dotenv";
 dotenv.config();

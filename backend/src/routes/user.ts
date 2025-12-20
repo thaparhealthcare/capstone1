@@ -1,12 +1,12 @@
-import { Router, RequestHandler } from "express";
+import { RequestHandler, Router } from "express";
 import {
-  login,
-  register,
-  checkLogin,
-  logout,
   addOpd,
+  checkLogin,
   getOpdLog,
-  search
+  login,
+  logout,
+  register,
+  search,
 } from "../controllers/user.js";
 import { check } from "../middlewares/auth.js";
 

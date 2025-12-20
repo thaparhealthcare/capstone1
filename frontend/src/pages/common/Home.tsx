@@ -16,10 +16,11 @@ export default function Home() {
             </div>
             <h1>TIET MediHub</h1>
           </div>
-          <NavLink to="/auth"><button className="border border-black px-4 py-2 rounded-full">
-            Get Started
-          </button></NavLink>
-          
+          <NavLink to="/auth">
+            <button className="border border-black px-4 py-2 rounded-full">
+              Get Started
+            </button>
+          </NavLink>
         </nav>
 
         {/* <p>
