@@ -200,7 +200,7 @@ export default function Prescribe() {
     console.log("After Final Input Values : ", inputValue);
 
     try {
-      const response: any = await api.post("/doctor/prescription", {
+      await api.post("/doctor/prescription", {
         prescription_id: prescription._id,
         doctor_id: `Dr. ${user.name}`,
         paramedic_notes: inputValue.paramedic_notes,
