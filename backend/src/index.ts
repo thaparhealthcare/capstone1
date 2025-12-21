@@ -4,6 +4,7 @@ import express from "express";
 import doctorRoutes from "./routes/doctor.js";
 import paramedicRoutes from "./routes/paramedics.js";
 import user from "./routes/user.js";
+import adminRoutes from "./routes/admin.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(
 app.use("/user", user);
 app.use("/doctor", doctorRoutes);
 app.use("/paramedic", paramedicRoutes);
+app.use("/admin", adminRoutes);
 
 app.get("/", function (_req, res) {
   res.send({ message: "Hello World" });
