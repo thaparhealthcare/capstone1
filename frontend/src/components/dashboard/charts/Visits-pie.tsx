@@ -39,8 +39,8 @@ export function VisitorsPieChart() {
               paddingAngle={5}
               dataKey="value"
             >
-              {data.map((entry, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              {data.map((entry,index) => (
+                <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip />
