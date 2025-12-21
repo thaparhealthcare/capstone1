@@ -3,6 +3,7 @@ import { api } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Access from "../common/access";
 
 interface TimeRange {
   startTime: string; // HH:mm
@@ -127,6 +128,7 @@ export default function DoctorAvailability() {
   };
 
   return (
+    <Access text={["doctor","admin"]}>
     <div className="p-6 w-full">
       <h1 className="text-4xl font-semibold mb-8 ml-6">Doctor Schedule</h1>
 
@@ -209,5 +211,6 @@ export default function DoctorAvailability() {
         )}
       </div>
     </div>
+    </Access>
   );
 }
