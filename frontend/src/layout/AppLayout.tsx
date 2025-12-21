@@ -1,26 +1,30 @@
-import { useContext, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { useContext } from "react";
+import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { userContext } from "../store/userContext";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 
 function AppLayout() {
   const { user } = useContext(userContext);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user.role) toast.success(`Welcome ${user.name}`);
-    let time: NodeJS.Timeout;
-    if (user.role === "admin") navigate("/app/admin/dailydetails");
-    else if (user.role === "receptionist")
-      navigate("/app/receptionist/dashboard");
-    else if (user.role === "paramedic") {
-      navigate("/app/paramedic/dashboard");
-    } else if (user.role === "doctor") navigate("/app/doctor/dashboard");
-    else time = setTimeout(() => navigate("/auth"), 1000);
-    return () => clearTimeout(time);
-  }, [user.role, navigate, user.name]);
+
+  // useEffect(() => {
+  //   if (user.role) toast.success(`Welcome ${user.name}`);
+  //   let time: NodeJS.Timeout;
+  //   if (user.role === "admin") {
+  //     time = setTimeout(() => navigate("/app/admin/dailydetails"), 5000);
+  //   } else if (user.role === "receptionist") {
+  //     time = setTimeout(() => navigate("/app/receptionist/dashboard"), 5000);
+  //   } else if (user.role === "paramedic") {
+  //     time = setTimeout(() => navigate("/app/paramedic/dashboard"), 5000);
+  //   } else if (user.role === "doctor") {
+  //     time = setTimeout(() => navigate("/app/doctor/dashboard"), 5000);
+  //   } else {
+  //     time = setTimeout(() => navigate("/auth"), 5000);
+  //   }
+  //   return () => clearTimeout(time);
+  // }, [user.role, navigate, user.name]);
 
   return (
     <>

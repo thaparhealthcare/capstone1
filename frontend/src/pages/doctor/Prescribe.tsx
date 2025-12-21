@@ -351,7 +351,7 @@ export default function Prescribe() {
     setSearchResults((prev) => ({ ...prev, [index]: [] })); // Clear results for this specific input
   };
   return (
-    <Access text={["doctor"]}>
+    <Access text={["doctor","admin"]}>
       <ToastContainer />
       <div className="p-6 bg-zinc-100 ">
         <h1 className="text-4xl font-semibold mb-6 pl-5">

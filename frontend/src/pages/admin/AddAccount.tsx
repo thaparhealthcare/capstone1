@@ -167,11 +167,11 @@ export default function AddAccount() {
                       Position
                     </option>
                     <option value="doctor">Doctor</option>
-                    <option value="nurse">Nurse</option>
+                    {/* <option value="nurse">Nurse</option> */}
                     <option value="admin">Admin</option>
                     <option value="receptionist">Receptionist</option>
                     <option value="pharmacist">Pharmacist</option>
-                    <option value="lab_technician">Lab Technician</option>
+                    {/* <option value="lab_technician">Lab Technician</option> */}
                     <option value="student">Student</option>
                   </select>
                 </div>

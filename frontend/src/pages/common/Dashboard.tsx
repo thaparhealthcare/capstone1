@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import ProfileForm from "./profile-form"; // assuming ProfileForm remains in its own file
+import Access from "./access";
 
 // DashboardLayout component defined inside the same file
 function DashboardLayout({ children }: { children: ReactNode }) {
@@ -14,12 +15,14 @@ function DashboardLayout({ children }: { children: ReactNode }) {
 export default function DashboardPage() {
   return (
     <DashboardLayout>
+      <Access text={["admin","doctor","receptionist","paramedic"]}>
       <div className="p-5">
         <h1 className="text-4xl ml-8 font-semibold font-medium text-gray-800 mt-0 mb-1">
           Dashboard
         </h1>
         <ProfileForm />
       </div>
+      </Access>
     </DashboardLayout>
   );
 }

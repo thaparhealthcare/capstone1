@@ -1,6 +1,7 @@
 import { api } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Access from "../common/access";
 
 interface TimeRange {
   startTime: string;
@@ -77,6 +78,7 @@ export default function DoctorCalendar() {
 
   /* ------------------ UI ------------------ */
   return (
+    <Access text={["doctor","admin"]}>
     <div className="p-6">
       <h1 className="text-4xl font-semibold mb-6 ml-8">My Calendar</h1>
 
@@ -242,5 +244,6 @@ export default function DoctorCalendar() {
         </div>
       </div>
     </div>
+    </Access>
   );
 }
