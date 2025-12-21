@@ -13,8 +13,6 @@ console.log(process.env.MONGODB_URI);
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-
-// CORS Configuration
 app.use(
   cors({
     origin: [

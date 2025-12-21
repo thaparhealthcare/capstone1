@@ -135,8 +135,11 @@ export default function Prescribe() {
   useEffect(() => {
     if (!prescription || !prescription._id) {
       setShowAdvice(true);
+    } else {
+      setShowAdvice(false);
     }
   }, [prescription]);
+
   useEffect(() => {
     if (!prescription || !prescription._id) return;
 
@@ -211,8 +214,6 @@ export default function Prescribe() {
         rest_recommendation: inputValue.rest_recommendation,
         follow_up_date: inputValue.follow_up_date,
       });
-      // console.log("API Response: ", response);
-      // toast.success(response.data.message);
       setPrescription({
         _id: "",
         name: "",
@@ -244,7 +245,7 @@ export default function Prescribe() {
         navigate("/app/doctor/patientqueue", {
           state: { prescription_id: prescription._id },
         });
-      }, 1200);
+      }, 1);
     } catch (error) {
       toast.error("Error while saving prescription details.");
       console.error(error);

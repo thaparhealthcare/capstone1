@@ -3,6 +3,7 @@ import doctorAvailability from "../models/doctorAvailability.js";
 import medicine from "../models/medicine.js";
 import patientQueue from "../models/patientQueue.js";
 import prescription from "../models/prescription.js";
+import user from "../models/user.js";
 
 export const createPrescription = async (_req: Request, res: Response) => {
   try {
@@ -207,5 +208,47 @@ export const getDoctorAvailability = async (req: Request, res: Response) => {
       success: false,
       message: "Server error",
     });
+  }
+};
+
+//for student portal controllers
+export const getAllDoctors = async (req: Request, res: Response) => {
+  try {
+    const doctors = await user.find({ role: "doctor" });
+
+    res.status(200).json({ doctors });
+  } catch (error: any) {
+    console.error("Error fetching doctor:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+export const getDoctorAvailabilityPublic = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { doctorId } = req.params;
+
+    if (!doctorId) {
+      return res.status(400).json({
+        success: false,
+        message: "Doctor ID is required",
+      });
+    }
+
+    const availability = await doctorAvailability
+      .find({ doctor: doctorId })
+      .sort({ date: 1 });
+
+    return res.status(200).json({
+      availability,
+    });
+  } catch (error) {
+    console.error("Error fetching availability:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

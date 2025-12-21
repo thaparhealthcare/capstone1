@@ -1,7 +1,9 @@
 import express, { RequestHandler } from "express";
 import {
   createPrescription,
+  getAllDoctors,
   getDoctorAvailability,
+  getDoctorAvailabilityPublic,
   searchMedicine,
   setDoctorAvailability,
 } from "../controllers/doctor.js";
@@ -18,4 +20,10 @@ router.get(
   getDoctorAvailability as RequestHandler
 );
 
+//student routes
+router.get("/findalldoctors", getAllDoctors as RequestHandler);
+router.get(
+  "/public/:doctorId/availability",
+  getDoctorAvailabilityPublic as RequestHandler
+);
 export default router;
