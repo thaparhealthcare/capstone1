@@ -146,8 +146,7 @@ export default function Sidebar() {
   const links1 = links.find((link) => link.role === user.role)?.links;
   const navigate = useNavigate();
   async function logout() {
-    const response = await api.get(`/user/logout`);
-
+    await api.get(`/user/logout`);
     navigate("/auth");
   }
   return (
