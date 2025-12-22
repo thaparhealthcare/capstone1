@@ -32,6 +32,7 @@ const App = () => {
         {
           path: "admin",
           children: [
+            { path: "inventory", element: <Inventory /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "dailydetails", element: <Admin /> },
             { path: "addaccount", element: <AddAccount /> },

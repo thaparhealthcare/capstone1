@@ -4,27 +4,31 @@ import { ToastContainer } from "react-toastify";
 import { userContext } from "../store/userContext";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
+import { useEffect } from "react";
+import { api } from "../lib/utils";
+import { useNavigate } from "react-router-dom";
 
 function AppLayout() {
-  const { user } = useContext(userContext);
+  const { user ,dispatch} = useContext(userContext);
+  const navigate = useNavigate();
 
 
-  // useEffect(() => {
-  //   if (user.role) toast.success(`Welcome ${user.name}`);
-  //   let time: NodeJS.Timeout;
-  //   if (user.role === "admin") {
-  //     time = setTimeout(() => navigate("/app/admin/dailydetails"), 5000);
-  //   } else if (user.role === "receptionist") {
-  //     time = setTimeout(() => navigate("/app/receptionist/dashboard"), 5000);
-  //   } else if (user.role === "paramedic") {
-  //     time = setTimeout(() => navigate("/app/paramedic/dashboard"), 5000);
-  //   } else if (user.role === "doctor") {
-  //     time = setTimeout(() => navigate("/app/doctor/dashboard"), 5000);
-  //   } else {
-  //     time = setTimeout(() => navigate("/auth"), 5000);
-  //   }
-  //   return () => clearTimeout(time);
-  // }, [user.role, navigate, user.name]);
+  useEffect(() => {
+  
+      const fetchUser = async () => {
+        try {
+          const response = await api.post(`/user/checkLogin`, {
+            withCredentials: true,
+          });
+          const data = response.data;
+          dispatch(data);
+        } catch (err) {
+          console.log("Error fetching user data:", err);
+          navigate("/");
+        }
+      };
+      fetchUser();
+    }, [dispatch]);
 
   return (
     <>
