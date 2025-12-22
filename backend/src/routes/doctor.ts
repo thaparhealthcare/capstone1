@@ -15,6 +15,11 @@ import {
   searchMedicine,
   setDoctorAvailability,
 } from "../controllers/doctor.js";
+import {
+  getAppointmentsByStudent,
+  getPastByStudent,
+  getUpcomingByStudent,
+} from "../controllers/studentappointment.js";
 import { check } from "../middlewares/auth.js";
 
 const router = express.Router();
@@ -48,4 +53,10 @@ router.get(
   getDoctorAvailabilityPublic as RequestHandler
 );
 router.post("/appointment/book", bookAppointment as RequestHandler);
+
+router.get("/appointments/student/:studentId", getAppointmentsByStudent);
+
+router.get("/appointments/student/:studentId/upcoming", getUpcomingByStudent);
+
+router.get("/appointments/student/:studentId/past", getPastByStudent);
 export default router;
