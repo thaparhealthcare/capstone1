@@ -13,7 +13,7 @@ export function cn(...inputs: ClassValue[]) {
 
 // import axios from "axios";
 // import.meta.env.VITE_PRODUCTION ||
-const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+const url = import.meta.env.VITE_BACKEND_URL;
 
 export const api = axios.create({
   baseURL: url,
