@@ -97,11 +97,6 @@ const links = [
         href: "/app/doctor/prescribe",
         logo: <LuNotebookPen className="mr-3 h-5 w-5" />,
       },
-      // {
-      //   name: "Training",
-      //   href: "/app/doctor/dashboard",
-      //   logo: <GraduationCap className="mr-3 h-5 w-5" />,
-      // },
       {
         name: "OPD Schedule",
         href: "/app/doctor/availability",
@@ -110,6 +105,11 @@ const links = [
       {
         name: "View Schedule",
         href: "/app/doctor/schedule/view",
+        logo: <ClipboardList className="mr-3 h-5 w-5" />,
+      },
+      {
+        name: "View Appointments",
+        href: "/app/doctor/appointments",
         logo: <ClipboardList className="mr-3 h-5 w-5" />,
       },
     ],

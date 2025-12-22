@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
-import jwt from "jsonwebtoken";
 import ObjectID from "bson-objectid";
+import jwt from "jsonwebtoken";
 
 export const check = async (
   req: Request,
@@ -19,9 +19,10 @@ export const check = async (
     const data: any = jwt.verify(token, secret);
     data["_doc"]._id = ObjectID(data["_doc"]._id);
     req.body.user = data["_doc"];
+    req.body.userId = ObjectID(data._doc._id);
     //console.log("token",data["_doc"]);
     next();
   } catch (err) {
-    res.status(401).json({message:"Invalid token"});
+    res.status(401).json({ message: "Invalid token" });
   }
 };

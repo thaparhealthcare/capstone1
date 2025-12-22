@@ -4,6 +4,7 @@ import AddAccount from "./pages/admin/AddAccount.tsx";
 import Admin from "./pages/admin/Admin.tsx";
 import { Auth } from "./pages/common/Auth";
 import Dashboard from "./pages/common/Dashboard.tsx";
+import DoctorAppointments from "./pages/doctor/DoctorAppointments.tsx";
 import DoctorAvailability from "./pages/doctor/DoctorAvailability.tsx";
 import DoctorCalendar from "./pages/doctor/DoctorCalender.tsx";
 import Prescribe from "./pages/doctor/Prescribe";
@@ -57,6 +58,10 @@ const App = () => {
             {
               path: "schedule/view",
               element: <DoctorCalendar />,
+            },
+            {
+              path: "appointments",
+              element: <DoctorAppointments />,
             },
           ],
         },
