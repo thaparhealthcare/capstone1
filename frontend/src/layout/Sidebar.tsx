@@ -128,6 +128,11 @@ const links = [
         logo: <LayoutDashboard className="mr-3 h-5 w-5" />,
       },
       {
+        name: "Inventory",
+        href: "/app/paramedic/inventory",
+        logo: <MdOutlineInventory className="mr-3 h-5 w-5" />,
+      },
+      {
         name: "AddAccount",
         href: "/app/admin/addaccount",
         logo: <GraduationCap className="mr-3 h-5 w-5" />,
