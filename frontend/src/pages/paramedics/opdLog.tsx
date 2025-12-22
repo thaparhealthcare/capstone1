@@ -20,7 +20,7 @@ export default function OpdLog({ status }: Props) {
   const { setPrescription } = useContext(prescriptionContext);
   function handle(data: dataPass) {
     setPrescription(data);
-    console.log("data is here", data);
+
     navigate("/app/doctor/prescribe");
   }
 

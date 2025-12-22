@@ -6,14 +6,13 @@ import {
 } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { opdPageInterface, userInterface } from "@/lib/types.ts";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-import Access from "../common/access";
-import { api } from "../../lib/utils.ts";
-import { toast, ToastContainer } from "react-toastify";
-import { ChangeEvent } from "react";
-import { userInterface, opdPageInterface } from "@/lib/types.ts";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { api } from "../../lib/utils.ts";
+import Access from "../common/access";
 
 const fields = [
   {
@@ -102,7 +101,7 @@ function Opd() {
     e.preventDefault();
     const { name, value } = e.target as HTMLInputElement;
     const response = await api.post("/user/search", { [name]: value });
-    console.log(response.data);
+
     setData(response.data);
   }
 

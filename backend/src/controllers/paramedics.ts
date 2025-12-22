@@ -20,7 +20,6 @@ const addOrUpdateMedicine = async (req: Request, res: Response) => {
     mfg_date,
   } = req.body;
 
-  console.log("Request body:", req.body);
 
   try {
     const newMedicine = await MedicineModel.findOneAndUpdate(

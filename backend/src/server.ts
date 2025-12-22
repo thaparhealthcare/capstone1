@@ -3,8 +3,7 @@ import { ConnectDB } from "./db/db.js";
 import { app } from "./index.js";
 import setupCronJobs from "./jobs/cron.js";
 
-console.log("hiii");
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8000;
 
 ConnectDB()
   .then(() => {
