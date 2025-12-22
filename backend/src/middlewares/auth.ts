@@ -14,13 +14,13 @@ export const check = async (
       ? JSON.parse(req.headers["authorization"])["value"]
       : null);
   const secret: any = process.env.secret;
-  //console.log("token",token);
+
   try {
     const data: any = jwt.verify(token, secret);
     data["_doc"]._id = ObjectID(data["_doc"]._id);
     req.body.user = data["_doc"];
     req.body.userId = ObjectID(data._doc._id);
-    //console.log("token",data["_doc"]);
+
     next();
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });

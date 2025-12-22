@@ -194,13 +194,10 @@ export default function Prescribe() {
     follow_up_date: "",
   });
 
-  console.log("Initial input Values : ", inputValue);
-  console.log("Prescription : ", prescription);
-  console.log("Prescription ID : ", prescription._id);
 
   async function submitPrescriptionForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("After Final Input Values : ", inputValue);
+
 
     try {
       await api.post("/doctor/prescription", {

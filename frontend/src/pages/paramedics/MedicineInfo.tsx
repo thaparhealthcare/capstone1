@@ -48,7 +48,7 @@ export default function MedicineDetails() {
     window.scrollTo(0, 0);
   }, []);
   const [formData, setFormData] = useState<MedicineFormData>(initialFormData);
-  console.log(state);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -60,7 +60,7 @@ export default function MedicineDetails() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
     const res: any = await api.post("/paramedic/add-medicine", formData);
     res.data.success
       ? toast.success(res.data.message)

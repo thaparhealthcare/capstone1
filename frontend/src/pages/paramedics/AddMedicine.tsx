@@ -61,7 +61,7 @@ export function AddMedicine() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
     const res: any = await api.post("/paramedic/add-medicine", formData);
     res.data.success
       ? toast.success(res.data.message)

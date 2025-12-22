@@ -170,14 +170,10 @@ export const getAllDoctorAppointments: RequestHandler = async (
   try {
     const doctorId = req.body.userId;
 
-    console.log(doctorId);
-    if (!doctorId) {
-      console.log("doctor heni");
-    }
     const appointments = await Appointment.find({ doctor: doctorId })
       .populate("student", "name rollNumber email")
       .sort({ date: 1, startTime: 1 });
-    console.log(appointments);
+
     res.json({ success: true, appointments });
   } catch (err) {
     next(err);

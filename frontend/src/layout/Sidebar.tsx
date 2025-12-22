@@ -147,7 +147,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   async function logout() {
     const response = await api.get(`/user/logout`);
-    console.log(response.status);
+
     navigate("/auth");
   }
   return (

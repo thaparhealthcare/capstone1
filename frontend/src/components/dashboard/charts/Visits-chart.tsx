@@ -1,3 +1,5 @@
+import { api } from "@/lib/utils";
+import { useEffect, useState } from "react";
 import {
   Line,
   LineChart,
@@ -6,8 +8,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useEffect, useState } from "react";
-import { api } from "@/lib/utils";
 
 export function VisitsChart() {
   const [data, setData] = useState([
@@ -30,10 +30,10 @@ export function VisitsChart() {
       api.get("/admin/getCountOfPatientsOverMonths").then((res) => {
         if (res.data.success) {
           const result = res.data.data;
-          console.log("Fetched Visits Data:", result);
+
           result.forEach((item: number, index: number) => {
-              data[index].visits = item;
-              setData(data);
+            data[index].visits = item;
+            setData(data);
           });
         }
       });

@@ -13,9 +13,9 @@ export const login = async (req: Request, res: Response) => {
     res.status(400).json({ message: "Field is missing" });
     return;
   }
-  console.log(name, password);
+
   const data: userInterface[] = await user.find({ name: name });
-  console.log(data[0]);
+
   const user1 = data[0];
   const secret: any = process.env.secret;
   if (data.length === 0) {
@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response) => {
     return;
   } else {
     if (!(await bcrypt.compare(password, user1.password))) {
-      console.log("wrong");
+
       res.status(401).json({ message: "Password is incorrect" });
       return;
     }
@@ -38,7 +38,7 @@ export const login = async (req: Request, res: Response) => {
     })
     .send(user1);
 
-  console.log("login ho gya", user1.role);
+
 };
 
 export const logout = async (req: Request, res: Response) => {
@@ -64,7 +64,7 @@ export const register = async (req: Request, res: Response) => {
       year,
     } = req.body;
 
-    console.log("Attempting to register a new user...");
+
 
     // Check if user already exists (by email or mobile_no)
     const existingUser = await user.findOne({
@@ -72,7 +72,6 @@ export const register = async (req: Request, res: Response) => {
     });
 
     if (existingUser) {
-      console.log("User already exists:", existingUser);
       return res.status(400).json({ message: "User already exists" });
     }
 
@@ -98,7 +97,6 @@ export const register = async (req: Request, res: Response) => {
     });
 
     await newUser.save();
-    console.log("User registered successfully:", newUser);
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -114,7 +112,7 @@ export const checkLogin = async (req: Request, res: Response) => {
       ? JSON.parse(req.headers["authorization"])["value"]
       : null);
   const secret: any = process.env.secret;
-  //console.log(token);
+
   try {
     if (!token) {
       res.status(401).json({ message: "No token" });
@@ -150,7 +148,7 @@ export const addOpd = async (req: Request, res: Response) => {
     respiratory_rate,
     pregnant,
   } = req.body;
-  //console.log(req.body);
+
   const check = await user.find({ roll_no: roll_no });
   let patient1;
   if (check.length == 0) {
@@ -198,12 +196,12 @@ export const addOpd = async (req: Request, res: Response) => {
     date: new Date(),
   });
   await prescription1.save();
-  //console.log(prescription1);
+
   await user.updateOne(
     { _id: check.length == 0 ? patient1?._id : check[0]._id },
     { $push: { prescription: prescription1._id } }
   );
-  //console.log(patient1);
+
   const queue = new Queue({
     patient_id: check.length == 0 ? patient1?._id : check[0]._id,
     status: false,
@@ -218,13 +216,13 @@ export const getOpdLog = async (req: Request, res: Response) => {
   const data = await Queue.find({ status: status })
     .populate("prescription_id")
     .populate("patient_id");
-  //console.log(data);
+
   res.status(200).json(data);
 };
 
 export const search = async (req: Request, res: Response) => {
   const { roll_no, staffId, mobile_no } = req.body;
-  console.log(await user.find({ mobile_no: "" }));
+
   const data = await user.find({
     $or: [
       { roll_no: { $regex: roll_no ? roll_no : "-1" } },
@@ -232,6 +230,6 @@ export const search = async (req: Request, res: Response) => {
       { mobile_no: { $regex: mobile_no ? mobile_no : "-1" } },
     ],
   });
-  console.log("hello", data);
+
   res.status(200).json(data);
 };

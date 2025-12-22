@@ -9,8 +9,8 @@ import user from "./routes/user.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log("op");
-console.log(process.env.MONGODB_URI);
+
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());

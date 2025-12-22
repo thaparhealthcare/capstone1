@@ -19,7 +19,7 @@ export const createPrescription = async (_req: Request, res: Response) => {
       follow_up_date,
     } = _req.body;
 
-    console.log("Request body:", _req.body);
+
 
     await prescription.findOneAndUpdate(
       {
@@ -92,7 +92,7 @@ export const createPrescription = async (_req: Request, res: Response) => {
 
 export const searchMedicine = async (req: Request, res: Response) => {
   try {
-    console.log("hello ji search karlo");
+
 
     const { query } = req.body;
 

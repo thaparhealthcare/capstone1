@@ -73,7 +73,7 @@ export default function PrescriptionDetail() {
             };
           },
         );
-        console.log("Filtered stock data:", stock);
+
         setstock(stock);
       } catch (error) {
         console.error("Error fetching stock data:", error);

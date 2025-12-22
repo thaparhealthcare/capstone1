@@ -53,7 +53,7 @@ export const pieChartdata = async (req: Request, res: Response) => {
         data[2].value++;
       }
     });
-    console.log(data);
+
     res.status(200).json({ success: true, data });
   } catch (err) {
     res.status(500).json({ success: false });
